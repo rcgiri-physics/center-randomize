@@ -424,6 +424,10 @@ for attempt in range(1, args.max_attempts + 1):
 if best.remaining > 0:
     for message in best.left_messages:
         logger.warning(message)
+    logger.error(
+        f"{best.remaining} students are still not assigned to a center after {attempt} "
+        f"attempt{'s' if attempt > 1 else ''}. Check the schools above, more centers or "
+        "more capacity may be needed")
 if attempt > 1:
     logger.info(f"Result of attempt {best_attempt} of {attempt} kept")
 

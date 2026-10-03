@@ -93,6 +93,7 @@ def test_a_successful_first_attempt_is_kept_without_retrying(tmp_path):
         pytest.fail("no seed works at the first attempt, the test needs another data set")
     process, left = run_script(tmp_path / "default" / "school-center.tsv", "-s", str(seed))
     assert left == 0 and "Attempt" not in process.stdout
+    assert "still not assigned" not in process.stdout + process.stderr
     assert read_rows(tmp_path / "one" / "school-center.tsv") == read_rows(tmp_path / "default" / "school-center.tsv")
 
 
@@ -105,6 +106,7 @@ def test_all_attempts_are_reported_and_the_result_is_still_written(tmp_path):
     assert "Attempt 1/3: 50 students not assigned, trying again" in process.stdout
     assert "Attempt 3/3: 50 students not assigned" in process.stdout
     assert "Attempt 3/3: 50 students not assigned, trying again" not in process.stdout
+    assert "50 students are still not assigned to a center after 3 attempts" in process.stderr
     assert [row["allocation"] for row in read_rows(out)] == ["50"]
 
 
@@ -131,6 +133,7 @@ def test_attempts_stop_when_the_remaining_students_can_never_be_placed(tmp_path)
     process, left = run_script(tmp_path / "out" / "school-center.tsv", "-a", "10", inputs=inputs)
     assert left == 20
     assert "Attempt" not in process.stdout
+    assert "20 students are still not assigned to a center after 1 attempt." in process.stderr
 
 
 def test_duplicate_school_code_does_not_crash(tmp_path):

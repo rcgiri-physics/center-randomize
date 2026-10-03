@@ -4,7 +4,7 @@ The goal of this script is to assign __exam centers__ to students.
 ## Steps
 1. Prepare input files in the specified format.
 2. Run the program. If any school has students who have not been assigned a center it runs again by itself, up to `MAX_ATTEMPTS` times, and keeps the best run. Re-run if - 
-   * Students are still not assigned after all attempts ("Students not assigned" in the output).
+   * Students are still not assigned after all attempts. An error is logged and "Students not assigned" shows how many. More centers or more capacity may be needed.
    * Distribution across centers is uneven.
 3. Perform sanity checks of distributed centers.
 4. Manually reassign impractical centers and odd lot allocations. Keep changes to a minimum. 
