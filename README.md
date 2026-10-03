@@ -80,6 +80,16 @@ To run streamlit app locally, install streamlit and use this command:
 streamlit run app.py 
 ```
 
+## Checking a result
+
+`validate_allocation.py` checks an allocation against the rules above (capacity, distance, no own or mutual centers, preferences, students per center, every student allocated) and exits with 1 if a rule that has to hold is broken:
+
+```bash
+python3 validate_allocation.py sample_data/schools_grade12_2081.tsv sample_data/centers_grade12_2081.tsv sample_data/prefs.tsv results/school-center.tsv
+```
+
+The maximum and minimum number of students per center are only warnings, use `--strict` to make them errors. `--compare OTHER.tsv` also checks that two results of the same input differ, `--json` prints the report as JSON.
+
 ## Output
 
 ```
